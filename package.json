@@ -1,0 +1,9 @@
+{
+  "name": "docker-ebs-sidekick",
+  "version": "0.0.1",
+  "private": true,
+  "main": "index.js",
+  "dependencies": {
+    "aws-sdk": "2.1.14"
+  }
+}
