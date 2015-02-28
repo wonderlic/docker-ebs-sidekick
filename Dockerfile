@@ -4,6 +4,6 @@ MAINTAINER Wonderlic DevOps <DevOps@wonderlic.com>
 COPY node_modules /app/node_modules
 COPY index.js /app/index.js
 
-RUN ln -s /usr/bin/node /usr/bin/node-ebs-sidekick
+RUN ln -s /usr/bin/node /app/ebs-sidekick
 
-CMD ["node-ebs-sidekick", "/app/index.js"]
+CMD ["/app/ebs-sidekick", "/app/index.js"]
