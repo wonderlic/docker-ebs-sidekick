@@ -7,10 +7,19 @@ AWS.config.update({
 });
 
 var ec2 = new AWS.EC2();
+var metadata = new AWS.MetadataService();
 
 var volumeId = process.env.VOLUME_ID;
-var instanceId = process.env.INSTANCE_ID; // TODO... read this from metadata
+var instanceId = process.env.INSTANCE_ID || null;  // Read this from the metadata service if not passed in
 var device = process.env.DEVICE;
+
+function _getInstanceId(cb) {
+  metadata.request('/latest/meta-data/instance-id', function(err, data) {
+    if (err) { return cb(err); }
+    console.log('Running on instance ' + data);
+    cb(null, data);
+  });
+}
 
 function _detachVolume(cb) {
   console.log('Checking volume ' + volumeId + ' ...');
@@ -100,12 +109,24 @@ process.on('SIGTERM', function() {
 
 // Main processing logic...
 
-_detachVolume(function(err) {
-  if (err) {return _handleError(err); }
-
-  _attachVolume(function(err) {
+function _start() {
+  _detachVolume(function(err) {
     if (err) {return _handleError(err); }
 
-    _waitForever();
-  })
-});
+    _attachVolume(function(err) {
+      if (err) {return _handleError(err); }
+
+      _waitForever();
+    })
+  });
+}
+
+if (instanceId) {
+  _start();
+} else {
+  _getInstanceId(function(err, data) {
+    if (err) {return _handleError(err);}
+    instanceId = data;
+    _start();
+  });
+}

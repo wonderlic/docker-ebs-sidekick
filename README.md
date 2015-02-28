@@ -19,3 +19,5 @@ docker run \
   -e DEVICE=... \
   wonderlic/ebs-sidekick
 ```
+
+INSTANCE_ID is optional.  If not supplied, the code will attempt to look up the instance-id of the Amazon EC2 instance that it is running on using the local meta-data service.
