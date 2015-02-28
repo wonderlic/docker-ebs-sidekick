@@ -31,3 +31,40 @@ docker run \
 ```
 
 INSTANCE_ID is optional.  If not supplied, the code will attempt to look up the instance-id of the Amazon EC2 instance that it is running on using the local meta-data service.
+
+### Example IAM Policy
+
+```
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": [
+        "ec2:DescribeVolumes"
+      ],
+      "Resource": "*"
+    },
+    {
+      "Effect": "Allow",
+      "Action": [
+        "ec2:AttachVolume",
+        "ec2:DetachVolume"
+      ],
+      "Resource": "arn:aws:ec2:[REGION]:[ACCOUNT]:instance/*",
+      "Condition": { "StringEquals": {"ec2:ResourceTag/Name": "[INSTANCE_NAME_TAG]"}}
+    },
+    {
+      "Effect": "Allow",
+      "Action": [
+        "ec2:AttachVolume",
+        "ec2:DetachVolume"
+      ],
+      "Resource": "arn:aws:ec2:[REGION]:[ACCOUNT]:volume/*",
+      "Condition": { "StringEquals": {"ec2:ResourceTag/Name": "[VOLUME_NAME_TAG]"}}
+    }
+  ]
+}
+```
+
+Replace [REGION], [ACCOUNT], [INSTANCE_NAME_TAG] and [VOLUME_NAME_TAG] with the appropriate values for your environment.
