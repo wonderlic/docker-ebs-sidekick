@@ -1,11 +1,17 @@
 # wonderlic/docker-ebs-sidekick
 
-##### github repo: wonderlic/docker-ebs-sidekick
+##### github repo: [https://github.com/wonderlic/docker-ebs-sidekick](https://github.com/wonderlic/docker-ebs-sidekick)
+##### docker hub repo: [https://registry.hub.docker.com/u/wonderlic/ebs-sidekick/](https://registry.hub.docker.com/u/wonderlic/ebs-sidekick/)
 
 This docker image will attach an Amazon EBS Volume to an Amazon EC2 Instance.
 It will then wait for a SIGINT or SIGTERM signal, at which point it will detach the Amazon EBS Volume.
 This is meant to be used on a CoreOS cluster as a sidekick to another container that needs persistent storage.
 
+### Docker Image Size
+
+```
+wonderlic/ebs-sidekick:latest  - 20.04 MB
+```
 
 ### Usage
 
