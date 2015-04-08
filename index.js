@@ -46,7 +46,7 @@ function _waitForDetachment(cb) {
     var volume = data.Volumes[0];
     if (volume.Attachments && volume.Attachments.length > 0) {
       console.log('...waiting for detachment...');
-      setTimeout(function() { _waitForDetachment(cb); }, 1000);
+      var garbageCollectMe = setTimeout(function() { _waitForDetachment(cb); }, 1000);
     } else {
       console.log('Volume ' + volumeId + ' successfully detached');
       cb();
@@ -71,13 +71,15 @@ function _waitForAttachment(cb) {
       cb();
     } else {
       console.log('...waiting for attachment...');
-      setTimeout(function() { _waitForAttachment(cb); }, 1000);
+      var garbageCollectMe = setTimeout(function() { _waitForAttachment(cb); }, 1000);
     }
   });
 }
 
 function _waitForever() {
-  setTimeout(function() { _waitForever(); }, 100000);
+  var garbageCollectMe = setTimeout(function() {
+    _waitForever();
+  }, 1000 * 100);
 }
 
 function _handleError(err) {
