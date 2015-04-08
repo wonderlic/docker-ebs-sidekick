@@ -14,7 +14,7 @@ This is meant to be used on a CoreOS cluster as a sidekick to another container 
 ### Docker Image Size
 
 ```
-wonderlic/ebs-sidekick:latest  - 29.1 MB
+wonderlic/ebs-sidekick:latest  - 20.13 MB
 ```
 
 ### Usage
